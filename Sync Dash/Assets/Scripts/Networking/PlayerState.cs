@@ -7,4 +7,5 @@ public class PlayerState
     public Quaternion rotation;
     public Vector3 velocity;
     public bool isJumped;
+    public bool collected;
 }

@@ -5,24 +5,35 @@ namespace SyncDash.Player
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MonoBehaviour
     {
-        [Header("Movement Settings")]
-        [SerializeField] private float forwardSpeed = 5f;
+        [Header("Jump Settings")]
         [SerializeField] private float jumpForce = 7f;
 
-        [Header("Ground Check")]
+        [Header("Ground Detection")]
         [SerializeField] private Transform groundCheck;
         [SerializeField] private float groundRadius = 0.3f;
         [SerializeField] private LayerMask groundLayer;
 
-        [Header("Extra Gravity")]
+        [Header("Gravity Settings")]
         [SerializeField] private float extraGravity = 20f;
 
+        [Header("Movement Speed")]
+        public float startSpeed = 3f;
+        public float maxSpeed = 25f;
+        public float speedIncreaseRate = 0.5f; // speed per second
+
+        // Runtime variables
+        private float currentSpeed;
         private Rigidbody rb;
         private bool isGrounded;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            currentSpeed = startSpeed;
         }
 
         private void Update()
@@ -43,7 +54,12 @@ namespace SyncDash.Player
 
         private void MoveForward()
         {
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, forwardSpeed);
+            // Increase speed over time
+            currentSpeed += speedIncreaseRate * Time.fixedDeltaTime;
+            currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+
+            //Forward
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, currentSpeed);
         }
 
         private void Jump()

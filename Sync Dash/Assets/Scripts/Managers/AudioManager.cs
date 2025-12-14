@@ -7,6 +7,17 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip jumpSoundClip;
     public AudioClip collectSoundClip;
+    public AudioClip gameOverClip;
+
+    private void OnEnable()
+    {
+        GameEvents.onPlayerDied += GameOverSound;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.onPlayerDied -= GameOverSound;
+    }
 
     private void Awake()
     {
@@ -28,5 +39,10 @@ public class AudioManager : MonoBehaviour
     public void CollectSound()
     {
         sfxSource.PlayOneShot(collectSoundClip);
+    }
+
+    public void GameOverSound()
+    {
+        sfxSource.PlayOneShot(gameOverClip);
     }
 }

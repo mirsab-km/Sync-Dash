@@ -29,7 +29,6 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    // Call this from other scripts
     public void Shake()
     {
         shakeTime = shakeDuration;

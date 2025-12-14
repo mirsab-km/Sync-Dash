@@ -8,4 +8,5 @@ public class PlayerState
     public Vector3 velocity;
     public bool isJumped;
     public bool collected;
+    public int orbID;
 }

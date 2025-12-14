@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 1804480689442277171}
   - component: {fileID: 3117899120498901738}
   - component: {fileID: 6737291436644111774}
+  - component: {fileID: 4322925109812214089}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_StaticEditorFlags: 16
+  m_IsActive: 1
 --- !u!4 &5197204295217251477
 Transform:
   m_ObjectHideFlags: 0
@@ -105,9 +106,21 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.90894955, y: 0.91959, z: 0.67596817}
+  m_Center: {x: 0.0058550537, y: -0.040205, z: -0.049702644}
+--- !u!114 &4322925109812214089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349211374582491800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfdf7bfd46b8fe4490d5ff7c4278487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacles

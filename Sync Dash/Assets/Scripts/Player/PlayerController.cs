@@ -25,6 +25,17 @@ namespace SyncDash.Player
         private float currentSpeed;
         private Rigidbody rb;
         private bool isGrounded;
+        private bool isDead = false;
+
+        private void OnEnable()
+        {
+            GameEvents.onPlayerDied += StopPlayer;
+        }
+
+        private void OnDisable()
+        {
+            GameEvents.onPlayerDied -= StopPlayer;
+        }
 
         private void Awake()
         {
@@ -47,6 +58,8 @@ namespace SyncDash.Player
 
         private void FixedUpdate()
         {
+            if (isDead) return;
+
             MoveForward();
             CheckGround();
             ApplyExtraGravity();
@@ -66,6 +79,8 @@ namespace SyncDash.Player
         {
             if (!isGrounded) return;
 
+            AudioManager.Instance.JumpSound();
+
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
@@ -81,5 +96,14 @@ namespace SyncDash.Player
                 rb.AddForce(Vector3.down * extraGravity, ForceMode.Acceleration);
             }
         }
+
+        public void StopPlayer()
+        {
+            isDead = true;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.isKinematic = true; // fully stop physics
+        }
+
     }
 }

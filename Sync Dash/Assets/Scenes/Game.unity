@@ -262,8 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateSyncManager
   playerRb: {fileID: 1215138484}
   remoteRb: {fileID: 1798509566}
-  delay: 0
-  smoothing: 8
+  delay: 0.001
+  smoothing: 10
 --- !u!4 &125642767
 Transform:
   m_ObjectHideFlags: 0
@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &461716309
 Canvas:
   m_ObjectHideFlags: 0
@@ -4881,7 +4881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae98f82b5ee364438669cc9c7f656d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShake
-  shakeDuration: 0.1
+  shakeDuration: 1
   shakeStrength: 0.15
 --- !u!1001 &2025235149
 PrefabInstance:

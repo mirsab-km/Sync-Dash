@@ -2,35 +2,56 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    private Vector3 originalPosition;
+    private Vector3 originalLocalPos;
 
     [Header("Shake Settings")]
     public float shakeDuration = 0.2f;
     public float shakeStrength = 0.15f;
 
-    private float shakeTime;
-
-    void Start()
+    private float timer;
+    private void OnEnable()
     {
-        originalPosition = transform.localPosition;
+        GameEvents.onPlayerDied += StopShake;
     }
 
-    void Update()
+    private void OnDisable()
     {
-        if (shakeTime > 0)
+        GameEvents.onPlayerDied -= StopShake;
+    }
+
+    private void Awake()
+    {
+        // Store original local position 
+        originalLocalPos = transform.localPosition;
+    }
+
+    private void Update()
+    {
+        if (timer > 0)
         {
-            transform.localPosition = originalPosition + Random.insideUnitSphere * shakeStrength;
-            shakeTime -= Time.deltaTime;
+            // Random offset around original position
+            Vector3 shakeOffset = Random.insideUnitSphere * shakeStrength;
+            transform.localPosition = originalLocalPos + shakeOffset;
+
+            timer -= Time.deltaTime;
         }
         else
         {
-            shakeTime = 0f;
-            transform.localPosition = originalPosition;
+            // Reset position after shake
+            timer = 0f;
+            transform.localPosition = originalLocalPos;
         }
     }
 
     public void Shake()
     {
-        shakeTime = shakeDuration;
+        timer = shakeDuration;
     }
+
+    public void StopShake()
+    {
+        timer = 0f;
+        transform.localPosition = originalLocalPos;
+    }
+
 }

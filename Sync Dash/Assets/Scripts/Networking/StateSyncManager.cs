@@ -6,7 +6,7 @@ public class StateSyncManager : MonoBehaviour
     public Rigidbody playerRb;
     public Rigidbody remoteRb;
 
-    [SerializeField] private float delay = 0f; //200 ms delay
+    [SerializeField] private float delay = 0f; 
     [SerializeField] private float smoothing = 8f;
     private float timer = 0f;
 
@@ -40,7 +40,7 @@ public class StateSyncManager : MonoBehaviour
         state.position = playerRb.position;
         state.rotation = playerRb.rotation;
         state.velocity = playerRb.linearVelocity;
-        state.isJumped = Input.GetMouseButton(0);
+        state.isJumped = Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space);
 
         //  Add orb event if triggered this frame
         state.collected = pendingOrbCollect;
@@ -72,7 +72,8 @@ public class StateSyncManager : MonoBehaviour
 
                 if (next.isJumped)
                 {
-                    remoteRb.linearVelocity = next.velocity;
+                    remoteRb.linearVelocity = Vector3.Lerp(remoteRb.linearVelocity, next.velocity, Time.deltaTime * smoothing);
+
                 }
 
                 //Apply orb collection to ghost

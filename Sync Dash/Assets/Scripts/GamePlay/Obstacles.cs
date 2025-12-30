@@ -14,23 +14,18 @@ public class Obstacles : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        // Camera shake (once)
-        if (cameraShake != null)
-            cameraShake.Shake();
+        // Shake first
+        cameraShake?.Shake();
 
-        // STOP player movement
-        Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            //rb.isKinematic = true; // fully stops physics
-        }
-
-        // Disable obstacle collider to avoid repeat hits
-        GetComponent<Collider>().enabled = false;
-
-        // Notify Game Over
-        GameEvents.onPlayerDied?.Invoke();
+        // Delay death slightly
+        Invoke(nameof(KillPlayer), 0.5f);
     }
+
+    private void KillPlayer()
+    {
+        GameEvents.onPlayerDied?.Invoke();
+        GetComponent<Collider>().enabled = false;
+    }
+
+
 }

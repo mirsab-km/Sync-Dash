@@ -50,11 +50,11 @@ public class ObjectPooler : MonoBehaviour
             return null;
         }
 
-        GameObject obj = poolDictionary[type].Dequeue();
+        GameObject obj = poolDictionary[type].Dequeue(); //fetches an inactive object from the pool
         obj.SetActive(true);
         obj.transform.SetPositionAndRotation(position, rotation);
 
-        poolDictionary[type].Enqueue(obj);
+        poolDictionary[type].Enqueue(obj); //re adds to the pool for reusing
         return obj;
     }
 }

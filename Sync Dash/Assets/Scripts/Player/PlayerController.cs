@@ -49,8 +49,8 @@ namespace SyncDash.Player
 
         private void Update()
         {
-            // Detect jump input (PC + Mobile)
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            // Detect jump input
+            if (Input.GetMouseButtonDown(0))
             {
                 Jump();
             }

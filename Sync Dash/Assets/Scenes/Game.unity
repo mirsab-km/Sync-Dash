@@ -262,8 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StateSyncManager
   playerRb: {fileID: 1215138484}
   remoteRb: {fileID: 1798509566}
-  delay: 0.001
-  smoothing: 10
+  bufferDelay: 5
+  smoothing: 8
 --- !u!4 &125642767
 Transform:
   m_ObjectHideFlags: 0
@@ -4652,6 +4652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1901963690}
   - component: {fileID: 1901963689}
+  - component: {fileID: 1901963691}
   m_Layer: 0
   m_Name: ObjectPooler
   m_TagString: Untagged
@@ -4674,7 +4675,7 @@ MonoBehaviour:
   pools:
   - type: Ground
     prefab: {fileID: 8587532531186301740, guid: 4b69178fd10887c41a696fdebe0127bb, type: 3}
-    size: 5
+    size: 8
 --- !u!4 &1901963690
 Transform:
   m_ObjectHideFlags: 0
@@ -4690,6 +4691,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1901963691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901963688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b98791fe967f54f9d59d4c2e5346b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundSpawner
+  player: {fileID: 1215138488}
+  firstGround: {fileID: 1418714028419277005}
+  tileLength: 50
+  tilesAhead: 5
 --- !u!1 &1929863621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4699,7 +4716,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1929863622}
-  - component: {fileID: 1929863624}
   m_Layer: 0
   m_Name: PlayerWorld
   m_TagString: Untagged
@@ -4724,22 +4740,6 @@ Transform:
   - {fileID: 1418714028419277005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1929863624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929863621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b98791fe967f54f9d59d4c2e5346b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GroundSpawner
-  player: {fileID: 1215138488}
-  firstGround: {fileID: 1418714028419277005}
-  tileLength: 50
-  tilesAhead: 5
 --- !u!1 &1957856850
 GameObject:
   m_ObjectHideFlags: 0

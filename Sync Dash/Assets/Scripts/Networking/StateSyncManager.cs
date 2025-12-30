@@ -6,9 +6,8 @@ public class StateSyncManager : MonoBehaviour
     public Rigidbody playerRb;
     public Rigidbody remoteRb;
 
-    [SerializeField] private float delay = 0f; 
+    [SerializeField] private float bufferDelay = 0f;
     [SerializeField] private float smoothing = 8f;
-    private float timer = 0f;
 
     private Queue<PlayerState> buffer = new Queue<PlayerState>();
     private Vector3 offSet;
@@ -40,7 +39,6 @@ public class StateSyncManager : MonoBehaviour
         state.position = playerRb.position;
         state.rotation = playerRb.rotation;
         state.velocity = playerRb.linearVelocity;
-        state.isJumped = Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space);
 
         //  Add orb event if triggered this frame
         state.collected = pendingOrbCollect;
@@ -52,36 +50,24 @@ public class StateSyncManager : MonoBehaviour
 
         buffer.Enqueue(state);
 
-        if (buffer.Count < 5)
+        //wait until buffer has enough delay
+        if (buffer.Count <= bufferDelay)
             return;
 
-        // Release state after delay
-        timer += Time.deltaTime;
-        if (timer >= delay)
+        PlayerState next = buffer.Dequeue();
+
+        //  Apply movement
+        Vector3 targetPos = next.position + offSet;
+        remoteRb.MovePosition(Vector3.Lerp(remoteRb.position, targetPos, Time.deltaTime * smoothing));
+        remoteRb.MoveRotation(Quaternion.Lerp(remoteRb.rotation, next.rotation, Time.deltaTime * smoothing));
+
+        // apply velocity
+        remoteRb.linearVelocity = Vector3.Lerp(remoteRb.linearVelocity, next.velocity, Time.deltaTime * smoothing);
+
+        //Apply orb collection to ghost
+        if (next.collected)
         {
-            timer = 0f;
-
-            if (buffer.Count > 0)
-            {
-                PlayerState next = buffer.Dequeue();
-
-                //  Apply movement
-                Vector3 targetPos = next.position + offSet;
-                remoteRb.MovePosition(Vector3.Lerp(remoteRb.position, targetPos, Time.deltaTime * smoothing));
-                remoteRb.MoveRotation(Quaternion.Lerp(remoteRb.rotation, next.rotation, Time.deltaTime * smoothing));
-
-                if (next.isJumped)
-                {
-                    remoteRb.linearVelocity = Vector3.Lerp(remoteRb.linearVelocity, next.velocity, Time.deltaTime * smoothing);
-
-                }
-
-                //Apply orb collection to ghost
-                if (next.collected)
-                {
-                    GhostOrbManager.Instance.CollectOrb(next.orbID);
-                }
-            }
+            GhostOrbManager.Instance.CollectOrb(next.orbID);
         }
     }
 }
